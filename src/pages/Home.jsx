@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-import { everything } from "../../data";
 import News from "../components/News";
-
+import { topHeadlines } from "../../data";
 
 export default function Home() {
-    const [newsData, setNewsData] = useState(null);
+    const [newsData, setNewsData] = useState(topHeadlines.articles);
 
     const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -17,12 +16,16 @@ export default function Home() {
             })
     }, [])
 
+    // const newsContent= newsData[1].content.split('...')
+    const newsContent = newsData[1].content.slice(0, newsData[1].content.indexOf('['))
+
+    console.log(newsContent)
 
     return (
         <>
             {
                 newsData &&
-                <div className="flex gap-10 mt-10">
+                <div className="flex gap-10 mt-4">
                     <div className="w-4/6">
                         <div className="w-full">
                             <img
@@ -32,7 +35,16 @@ export default function Home() {
                             />
                             <h2 className="font-semibold text-4xl mt-6">{newsData[1].title}</h2>
                             <p className="mt-4 text-lg">{newsData[1].description}</p>
-                            <p className="mt-4 text-lg">{newsData[1].content}</p>
+                            <p className="mt-4 text-lg">
+                                {newsContent}
+                                <a
+                                    href={newsData[1].url}
+                                    className="text-orange-400"
+                                    target="_blank"
+                                >
+                                    See more
+                                </a>
+                            </p>
                         </div>
                     </div>
                     <div className="w-2/6">
