@@ -1,8 +1,10 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
-import Home from "./pages/Home"
 import NotFound from "./components/NotFound"
+import Home from './pages/Home'
+import News from './pages/News'
+import SearchPage from './pages/SearchPage'
 
 function App() {
   return (
@@ -11,7 +13,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path='everything' element={<Home />} />
+            <Route path='news/:id' element={<News />} />
+            <Route path='search' element={<SearchPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

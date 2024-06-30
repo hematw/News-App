@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useSearchParams } from "react-router-dom";
-import Filter from "../components/Filter";
 
-export default function Home() {
+export default function SearchPage() {
     const [newsData, setNewsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const apiKey = import.meta.env.VITE_API_KEY;
-    const [searchParams, setSearchParams] = useSearchParams();
 
-    const categoryFilter = searchParams.get('category');
+    const [searchParams, setSearchParams] = useSearchParams()
 
+    const q = searchParams.get('q')
 
     useEffect(() => {
         setIsLoading(true);
 
-        let endpoint = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-        if (categoryFilter) {
-            endpoint += `&category=${categoryFilter}`;
-        }
+        let endpoint = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}` + `&q=${q}`
 
         fetch(endpoint)
             .then(res => res.json())
@@ -35,14 +31,24 @@ export default function Home() {
                 console.log(e);
                 setIsLoading(false);
             });
-    }, [categoryFilter]);
+    }, [q]);
+
+    console.log(newsData)
 
     if (isLoading) {
         return (
-            <div className="h-1/6 flex items-center">
-                <div className="loader"> adsgsdgasg</div>
+            <div className="h-[560px] flex items-center justify-center">
+                <div className="text-center text-4xl">Loading...</div>
             </div>
         );
+    }
+
+    if (!newsData.length) {
+        return (
+            <div className="h-[560px] flex items-center justify-center">
+                <div className="text-center text-4xl">Nothing found for this search</div>
+            </div>
+        )
     }
 
     const newsCards = newsData.map(news => {
@@ -59,7 +65,7 @@ export default function Home() {
                 <h2 className="font-semibold text-xl mt-6">{news.title}</h2>
                 <p className="mt-4">{news.description}</p>
                 <Link
-                    to={'news/' + news.id}
+                    to={'/news/' + news.id}
                     state={news}
                     className="bg-slate-600 text-white py-2 px-4 rounded-lg mt-4 inline-block"
                 >
@@ -71,7 +77,6 @@ export default function Home() {
 
     return (
         <>
-            <Filter />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
                 {newsCards}
             </div>
