@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { FiSearch } from "react-icons/fi"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 export default function Header({ setSearchWord }) {
     const [inputValue, setInputValue] = useState('')
@@ -13,9 +13,14 @@ export default function Header({ setSearchWord }) {
 
     return (
         <header className="px-10 py-4 flex items-center justify-between bg-slate-700 text-gray-200">
+            <div className="flex items-center gap-10">
             <Link to='/' >
                 <img src="/logo.png" alt="Brand logo" className="w-14 invert" />
             </Link>
+            <Link to='/' >
+                Home
+            </Link>
+            </div>
 
             <div className="flex items-center bg-slate-100 text-slate-700 h-10 rounded-md">
                 <input

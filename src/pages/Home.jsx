@@ -39,8 +39,8 @@ export default function Home() {
 
     if (isLoading) {
         return (
-            <div className="h-1/6 flex items-center">
-                <div className="loader"> adsgsdgasg</div>
+            <div className="h-[560px] flex items-center justify-center">
+                <div className="text-center text-4xl">Loading...</div>
             </div>
         );
     }
