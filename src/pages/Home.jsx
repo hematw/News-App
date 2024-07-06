@@ -46,24 +46,30 @@ export default function Home() {
     }
 
     const newsCards = newsData.map(news => {
-        const randomIndex = Math.floor(Math.random() * 6)
+        const randomIndex = Math.ceil(Math.random() * 5)
         const randomImage = `/news${randomIndex}.png`
 
         return (
-            <div key={news.id} className="relative w-full bg-slate-100 p-6 drop-shadow-xl hover:outline outline-slate-400 rounded-lg transition-all">
-                <img
-                    src={news.urlToImage || randomImage}
-                    alt={`Image of ${news.title}`}
-                    className="w-full object-contain rounded-lg drop-shadow-xl"
-                />
-                <h2 className="font-semibold text-xl mt-6">{news.title}</h2>
-                <p className="mt-4">{news.description}</p>
+            <div
+                key={news.id}
+                className="w-full bg-slate-100 drop-shadow-xl hover:scale-105 hover:outline outline-slate-400 rounded-lg transition-all duration-300"
+            >
                 <Link
                     to={'news/' + news.id}
                     state={news}
-                    className="bg-slate-600 text-white py-2 px-4 rounded-lg mt-4 inline-block"
+                    className="p-6 rounded-lg inline-block h-full"
                 >
-                    See details
+                    <img
+                        src={news.urlToImage || randomImage}
+                        alt={`Image of ${news.title}`}
+                        className="w-full max-h-40 object-cover rounded-lg drop-shadow-xl aspect-video"
+                    />
+                    <h2 className="font-semibold text-xl mt-6 line-clamp-3">
+                        {news.title}
+                    </h2>
+                    <p className="mt-8 line-clamp-4">
+                        {news.description}
+                    </p>
                 </Link>
             </div>
         )
